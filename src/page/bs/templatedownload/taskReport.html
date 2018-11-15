@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{margin:0;padding: 0;box-sizing: border-box;}
+
+    html,body {width: 100%;height: 100%;}
+    
+    /* 顶部 */
+    .top {padding: 0 10px;width: 100%;height: 100px;}
+
+    .top::after {display: block;clear: both;content: ' ';}
+
+    .logo {float: left;width: 220px;height: 100px;}
+
+    .top-right {float: right;margin-top: 30px;font-size: 14px;}
+
+    .welcome {margin-bottom: 10px;text-align: right;}
+
+    /* 任务运行报表 */
+    .title {width: 100%;height: 50px;line-height: 50px;text-align: center;font-size: 18px;background-color:#03a9f4;color: #fff;}
+
+    .operatingData {width: 100%;height: 50px;line-height: 50px;text-align: center;font-size: 18px;background-color:#eee;}
+
+    /* 运行数据 */
+    .group {width: 100%;display: flex;justify-content: space-between;border: 1px solid #ccc;}
+
+    .item {flex: 1; height: 60px;line-height: 60px;text-align: center;border-right: 1px solid #ccc;}
+
+    .item:last-child {border-right: none;}
+
+    .group-data {width: 100%;display: flex;justify-content: space-between;border: 1px solid #ccc;border-top: none;}
+
+    .item-data {flex: 1;height: 60px;line-height: 60px;text-align: center;border-right: 1px solid #ccc;}
+
+    .item-data:last-child {border-right: none;}
+
+    /* 任务报表--饼图 */
+    .echarts {width: 100%;}
+
+    .e-box {margin-top: 20px;width: 100%;text-align: center;}
+
+    .e-list {width: 100%;height: 350px;}
+
+    .e-item {float: left;width: 33.3333%;height: 100%;list-style: none;}
+
+    .e-item::after {display: block;clear: both;content: ' ';}
+
+    .e-item:last-child {margin-right: 0;}
+    
+    /* 任务报表--折线图 */
+    .line-chart {width: 100%;}
+
+    .line-box {position: relative;margin-top: 20px;width: 100%;text-align: center;}
+    
+    /* 运单报表--饼图 */
+    .task {width: 100%;}
+
+    .t-box {margin-top: 20px;width: 100%;text-align: center;}
+
+    .t-list {width: 100%;height: 350px;}
+
+    .t-item {float: left;width: 33.3333%;height: 100%;list-style: none;}
+
+    .t-item::after {display: block;clear: both;content: ' ';}
+
+    .t-item:last-child {margin-right: 0;}
+    
+    /* 运单报表--折线图 */
+    .line-task {width: 100%;}
+
+    .task-box {position: relative;margin-top: 20px;width: 100%;text-align: center;}
+
+    /* 底部 */
+    .bottom {width: 100%;font-size: 14px;background-color: #e6e6e6;}
+
+    .bottom::after {display: block;clear: both;content: ' ';}
+
+    .bottom-left {padding: 30px 50px;float: left;width: 70%;}
+
+    .email {margin-bottom: 20px;text-align: center;color: #888;}
+
+    .email:last-child {margin-bottom: 0;}
+
+    .bottom-right {float: right;width: 30%;}
+
+    .public {margin-top: 10px;width: 100px;text-align: center;}
+
+    .p-text {font-size: 14px;color: #888;}
+  </style>
+</head>
+<body>
+  <!-- 顶部 -->
+  <div class="top">
+    <div class="logo"><img src="../../../assets/logo01.png" alt=""></div>
+    <div class="top-right">
+      <div class="welcome"><a href="javascript:;">欢迎订阅</a></div>
+      <div class="welcome">如果图片不能正常显示，<a href="javascript:;">请点击这里</a></div>
+    </div>
+  </div>
+  <!-- 任务运行报表 -->
+  <div class="title">任务运行报表（2018.3.1-20183.31）</div>
+  <!-- 运行数据 -->
+  <div class="operatingData">运行数据</div>
+  <div class="group">
+    <div class="item">任务数</div>
+    <div class="item">运单数</div>
+    <div class="item">正常签收数</div>
+    <div class="item">异常签收数</div>
+    <div class="item">未完成任务数</div>
+    <div class="item">未完成运单数</div>
+    <div class="item">运单准时数</div>
+  </div>
+  <div class="group-data">
+    <div class="item-data">80</div>
+    <div class="item-data">120</div>
+    <div class="item-data">105</div>
+    <div class="item-data">15</div>
+    <div class="item-data">5</div>
+    <div class="item-data">9</div>
+    <div class="item-data">110</div>
+  </div>
+  <!-- 任务报表 -->
+  <div class="operatingData">任务报表</div>
+  <!-- 任务报表 ····饼图 -->
+  <div class="echarts">
+    <div class="e-box">
+      <ul class="e-list">
+        <li class="e-item">
+          <div id="thisWeek" style="width: 100%;height: 350px;"></div>
+        </li>
+        <li class="e-item">
+          <div id="thisWeek2" style="width: 100%;height: 350px;"></div>
+        </li>
+        <li class="e-item">
+          <div id="thisWeek3" style="width: 100%;height: 350px;"></div>
+        </li>
+      </ul>
+    </div>
+    <!-- 任务报表 ·····折线图 -->
+    <div class="line-chart">
+      <div class="line-box">
+        <div id="thisWeek4" style="width: 100%; height: 480px;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 运单报表 -->
+  <div class="operatingData">运单报表</div>
+  <!-- 运单报表 ·····饼图 -->
+  <div class="task">
+    <div class="t-box">
+      <ul class="t-list">
+        <li class="t-item">
+          <div id="task" style="width: 100%;height: 350px;"></div>
+        </li>
+        <li class="t-item">
+          <div id="task2" style="width: 100%;height: 350px;"></div>
+        </li>
+        <li class="t-item">
+          <div id="task3" style="width: 100%;height: 350px;"></div>
+        </li>
+      </ul>
+    </div>
+    <!-- 运单报表 ·····折线图 -->
+    <div class="line-task">
+      <div class="task-box">
+        <div id="task4" style="width: 100%; height: 480px;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 底部 -->
+  <div class="bottom">
+    <div class="bottom-left">
+      <div class="email">此邮件由前云单运营平台发出，系统不接收回信，请勿直接回复。</div>
+      <div class="email">粤ICP备17077172号-1</div>
+      <div class="email">©2018 www.bcscm.net 前海云链科技（深圳）有限公司</div>
+    </div>
+    <div class="bottom-right">
+      <div class="public">
+        <img style="width: 80px; height: 80px;" src="../../../assets/wechat.png" alt="">
+        <p class="p-text">云单微信公众号</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script>
+      //任务报表
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('thisWeek'));
+  // 指定图表的配置项和数据
+  var option = {
+    title: {text: "任务单完成情况",left: "center"},
+    tooltip: {trigger: "item",formatter: "{a} <br/>{b} : {c} ({d}%)"},
+    color: ["#5b9bd5", "#ed7d31"],legend: {bottom: 10,left: "center",data: ["完成", "未完成"]},
+    series: [
+      {type: "pie",radius: "55%",center: ["50%", "50%"],label: {normal: {show: true,formatter: "{b}: {c} ({d}%)"}},selectedMode: "single",
+        data: [
+          { value: 500, name: "完成" },
+          { value: 300, name: "未完成" }
+        ],
+        itemStyle: {emphasis: {shadowBlur: 10,shadowOffsetX: 0,shadowColor: "rgba(0, 0, 0, 0.5)"},normal: {borderWidth: 2,borderColor: "#fff"}}
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('thisWeek2'));
+  var option2 = {title: {text: "任务单异常情况",left: "center"},
+    tooltip: {trigger: "item",formatter: "{a} <br/>{b} : {c} ({d}%)"},
+    color: ["#5b9bd5", "#ed7d31"],
+    legend: {bottom: 10,left: "center",data: ["正常", "异常"]},
+    series: [{type: "pie",radius: "55%",center: ["50%", "50%"],label: {normal: {show: true,formatter: "{b}: {c}({d}%)"}},selectedMode: "single",
+        data: [
+          { value: 500, name: "正常" },
+          { value: 300, name: "异常" }
+        ],
+        itemStyle: {emphasis: {shadowBlur: 10,shadowOffsetX: 0,shadowColor: "rgba(0, 0, 0, 0.5)"},normal: {borderWidth: 2,borderColor: "#fff"}}
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option2);
+
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('thisWeek3'));
+  var option3 = {title: {text: "任务单准时情况",left: "center"},
+    tooltip: {trigger: "item",formatter: "{a} <br/>{b} : {c} ({d}%)"},
+    color: ["#5b9bd5", "#ed7d31"],
+    legend: {bottom: 10,left: "center",data: ["正常", "延误"]},
+    series: [{type: "pie",radius: "55%",center: ["50%", "50%"],
+    label: {normal: {show: true,formatter: "{b}: {c}({d}%)"}},selectedMode: "single",
+        data: [
+          { value: 500, name: "正常" },
+          { value: 300, name: "延误" }
+        ],
+        itemStyle: {emphasis: {shadowBlur: 10,shadowOffsetX: 0,shadowColor: "rgba(0, 0, 0, 0.5)"},
+          normal: {borderWidth: 2,borderColor: "#fff"}
+        }
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option3);
+
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('thisWeek4'));
+  var option4 = {title: {text: "任务单/数量"},tooltip: {trigger: "axis"},
+    legend: {data: ["计划数", "完成数", "未完成数"]},
+    grid: {top: "10%",left: "3%",right: "8%",bottom: "3%",containLabel: true},
+    xAxis: {
+      type: "category",
+      boundaryGap: true,
+      data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    },
+    yAxis: {
+      type: "value",
+      max: 900,
+      min: 0,
+      splitNumber: 6
+    },
+    series: [
+      {
+        name: "计划数",
+        type: "bar",
+        data: ['200','600','800','300','500','100','300','700','600','400','800','200'],
+        barMaxWidth: 30, 
+        itemStyle: {normal: {label: {show: true,position: "top",formatter: "{c}"},color: "#ed7d31"}}
+      },
+      {
+        name: "完成数",
+        type: "line",
+        data: ['200','600','800','300','500','100','300','700','600','400','800','200'],
+        itemStyle: {normal: {color: "#5b9bd5"}}
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option4);
+
+      //运单报表
+  // 基于准备好的dom，初始化echarts实例
+  var myTask = echarts.init(document.getElementById('task'));
+  // 指定图表的配置项和数据
+  var taskOption = {title: {text: "任务单完成情况",left: "center"},
+    tooltip: {trigger: "item",formatter: "{a} <br/>{b} : {c} ({d}%)"},color: ["#5b9bd5", "#ed7d31"],
+    legend: {bottom: 10,left: "center",data: ["完成", "未完成"]},
+    series: [{type: "pie",radius: "55%",center: ["50%", "50%"],label: {normal: {show: true,formatter: "{b}: {c}({d}%)"}},
+        selectedMode: "single",
+        data: [
+          { value: 500, name: "完成" },
+          { value: 300, name: "未完成" }
+        ],
+        itemStyle: {emphasis: {shadowBlur: 10,shadowOffsetX: 0,shadowColor: "rgba(0, 0, 0, 0.5)"},normal: {borderWidth: 2,borderColor: "#fff"}}
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myTask.setOption(taskOption);
+
+  // 基于准备好的dom，初始化echarts实例
+  var myTask = echarts.init(document.getElementById('task2'));
+  // 指定图表的配置项和数据
+  var taskOption2 = {title: {text: "任务单完成情况",left: "center"},
+    tooltip: {trigger: "item",formatter: "{a} <br/>{b} : {c} ({d}%)"},
+    color: ["#5b9bd5", "#ed7d31"],
+    legend: {bottom: 10,left: "center",data: ["正常", "异常"]},
+    series: [{type: "pie",radius: "55%",center: ["50%", "50%"],label: {normal: {show: true,formatter: "{b}: {c}({d}%)"}},selectedMode: "single",
+        data: [
+          { value: 500, name: "正常" },
+          { value: 300, name: "异常" }
+        ],
+        itemStyle: {emphasis: {shadowBlur: 10,shadowOffsetX: 0,shadowColor: "rgba(0, 0, 0, 0.5)"},
+          normal: {borderWidth: 2,borderColor: "#fff"}}
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myTask.setOption(taskOption2);
+
+  // 基于准备好的dom，初始化echarts实例
+  var myTask = echarts.init(document.getElementById('task3'));
+  // 指定图表的配置项和数据
+  var taskOption3 = {title: {text: "任务单完成情况",left: "center"},tooltip: {trigger: "item",formatter: "{a} <br/>{b} : {c} ({d}%)"},
+    color: ["#5b9bd5", "#ed7d31"],legend: {bottom: 10,left: "center",data: ["正常", "延误"]},
+    series: [{type: "pie",radius: "55%",center: ["50%", "50%"],label: {normal: {show: true,formatter: "{b}: {c}({d}%)"}},selectedMode: "single",
+        data: [
+          { value: 500, name: "正常" },
+          { value: 300, name: "延误" }
+        ],
+        itemStyle: {emphasis: {shadowBlur: 10,shadowOffsetX: 0,shadowColor: "rgba(0, 0, 0, 0.5)"},
+          normal: {borderWidth: 2,borderColor: "#fff"}}
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myTask.setOption(taskOption3);
+
+  // 基于准备好的dom，初始化echarts实例
+  var myTask = echarts.init(document.getElementById('task4'));
+  var taskOption4 = {title: {text: "任务单/数量"},tooltip: {trigger: "axis"},
+    legend: {data: ["计划数", "完成数", "未完成数"]},
+    grid: {top: "10%",left: "3%",right: "8%",bottom: "3%",containLabel: true},
+    xAxis: {type: "category",boundaryGap: true,
+      data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    },yAxis: {type: "value",
+      max: 900,
+      min: 0,
+      splitNumber: 6
+    },series: [
+      {name: "计划数",type: "bar",
+        data: ['200','600','800','300','500','100','300','700','600','400','800','200'],
+        barMaxWidth: 30, 
+        itemStyle: {normal: {label: {show: true,position: "top",formatter: "{c}"},color: "#ed7d31"}}
+      },{name: "完成数",type: "line",
+        data: ['200','600','800','300','500','100','300','700','600','400','800','200'],
+        itemStyle: {normal: {color: "#5b9bd5"}}}
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myTask.setOption(taskOption4);
+</script>
